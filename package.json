@@ -8,7 +8,11 @@
   },
   "dependencies": {
     "egg": "^2.15.1",
-    "egg-scripts": "^2.11.0"
+    "egg-scripts": "^2.11.0",
+    "egg-view": "^2.1.2",
+    "egg-view-assets": "^1.4.4",
+    "egg-view-ejs": "^2.0.0",
+    "puppeteer": "^1.12.2"
   },
   "devDependencies": {
     "autod": "^3.0.1",
@@ -26,7 +30,7 @@
   "scripts": {
     "start": "egg-scripts start --daemon --title=egg-server-node-tools",
     "stop": "egg-scripts stop --title=egg-server-node-tools",
-    "dev": "egg-bin dev",
+    "dev": "egg-bin dev --port 7001",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",

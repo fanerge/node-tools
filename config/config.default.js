@@ -13,6 +13,18 @@ module.exports = appInfo => {
   // add your middleware config here
   config.middleware = [];
 
+  config.view = {
+    mapping: {
+      '.ejs': 'ejs',
+    },
+  };
+
+  config.security = {
+    xframe: {
+      enable: false,
+    },
+  };
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
