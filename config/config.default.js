@@ -19,6 +19,13 @@ module.exports = appInfo => {
     },
   };
 
+  config.assets = {
+    devServer: {
+      command: 'roadhog dev',
+      port: 7777,
+    },
+  };
+
   config.security = {
     xframe: {
       enable: false,
