@@ -6,5 +6,10 @@
 module.exports = app => {
   const { router, controller } = app;
   router.get('/', controller.home.index);
-  router.post('/screenshot', controller.screenshot.index);
+  router.get('/screenshot', controller.screenshot.index);
+  router.post('/screenshot', controller.screenshot.split);
+  // monitoringplatform
+  router.get('/monitoringplatform', controller.monitoringplatform.index);
+  router.post('/monitoringplatform/getError', controller.monitoringplatform.getError);
+  router.get('/monitoringplatform/test', controller.monitoringplatform.test);
 };

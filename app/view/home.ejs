@@ -5,42 +5,12 @@
 <title>文档标题</title>
 </head>
 <body>
-    <h1>服务端截屏demo</h1>
+    <h1>服务端工具展示</h1>
     <div>
-        <input type="text" id="url" value="https://ant.design/docs/react/introduce-cn" style="width: 300px;"/>
-        <button id="btn">截屏</button>
-        <br />
-        <div style="border: 1px solid #ccc;">
-            <img id="show" src=''/>
-        </div>
+        <ul>
+            <li><a href="/screenshot/">服务端截屏</a></li>
+            <li><a href="/monitoringplatform/">监控平台</a></li>
+        </ul>
     </div>
 </body>
-<script>
-var url = document.getElementById('url'),
-    btn = document.getElementById('btn'),
-    show = document.getElementById('show');
-
-btn.addEventListener('click', () => {
-    var pageUrl = url.value;
-
-    if(pageUrl === '') {
-        return alert('请填写截屏的URL');
-    }
-
-    fetch('/screenshot?_csrf=<%= ctx.csrf %>', {
-        method: 'post',
-        credentials: 'include',
-        body: JSON.stringify({url: pageUrl}),
-        headers: new Headers({
-            'Content-Type': 'application/json'
-        })  
-    })
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(myJson) {
-        show.src = `data:image/png;base64,${myJson.data}`;
-    });
-}, false)
-</script>
 </html>
