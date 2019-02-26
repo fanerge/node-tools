@@ -14,3 +14,8 @@ exports.assets = {
     screenshot: '/screenshot/',
     public: '/public'
 };
+
+exports.mysql = {
+    enable: true,
+    package: 'egg-mysql',
+  };

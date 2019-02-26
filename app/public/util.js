@@ -38,21 +38,54 @@ let util = new Util('http://localhost:7001/monitoringplatform/getError');
 // 错误收集率
 util.setOdds(1);
 
-// 1.捕获运行时、同步、异步错误
-window.onerror = (msg, url, row, col, error) => {
-  util.report({ msg, url, row, col, error })
-  // 阻止异常向上抛出
-  return true;
-}
+// // 1.捕获运行时、同步、异步错误
+// window.onerror = (msg, url, row, col, error) => {
+//   util.report({ msg, url, row, col, error })
+//   // 阻止异常向上抛出
+//   return true;
+// }
 
-// 2.捕获“网络请求异常”错误
-window.addEventListener('error', (msg, url, row, col, error) => {
-  util.report({ msg, url, row, col, error })
+// 1.捕获运行时、同步、异步错误、“网络请求异常”错误
+window.addEventListener('error', (event) => {
+  // 运行时、同步、异步错误
+  if(event instanceof ErrorEvent) {
+    let temp = {
+      type: 'normal',
+      date: Date.now(),
+      message: event.message,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+      error: {
+        message: event.error.message,
+        stack: event.error.stack
+      }
+    }
+    util.report(temp);
+    return;
+  }
+  // 资源错误
+  if(event instanceof Event) {
+    util.report({
+      type: 'resource',
+      date: Date.now(),
+      target: event.target.toString(),
+      path: event.path.map(item => {return {
+        tagName: item.nodeName,
+        id: item.id
+      }})
+    });
+    return;
+  }
 }, true);
 
-// 3.捕获全局Promise错误
+// 2.捕获全局Promise错误
 window.addEventListener('unhandledrejection', (event) => {
-  util.report(event)
+  util.report({
+    type: 'promise',
+    date: Date.now(),
+    reason: event.reason
+  })
   // event.reason
 });
 // Promise.reject(1);

@@ -15,8 +15,13 @@ class HomeController extends Controller {
 
   async getError() {
     const ctx = this.ctx;
-    console.log(ctx.query);
+    const { appName, error } = ctx.query;
     ctx.status = 200;
+    return;
+    ctx.body = {
+      success: true,
+      msg: '上报成功'
+    }
   }
 }
 
