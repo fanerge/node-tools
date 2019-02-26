@@ -10,6 +10,6 @@ module.exports = app => {
   router.post('/screenshot', controller.screenshot.split);
   // monitoringplatform
   router.get('/monitoringplatform', controller.monitoringplatform.index);
-  router.post('/monitoringplatform/getError', controller.monitoringplatform.getError);
+  router.get('/monitoringplatform/getError', controller.monitoringplatform.getError);
   router.get('/monitoringplatform/test', controller.monitoringplatform.test);
 };

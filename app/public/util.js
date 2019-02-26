@@ -1,58 +1,59 @@
+window.appName = 'app1';
 
-class GetError{
-  constructor() {
-    this.reportUrl = reportUrl; // 'http://localhost:7001/monitoringplatform/getError'
-    this.csrf = csrf;
-    this.reportData = reportData;
+class Util {
+  constructor(reportUrl, appName = window.appName) {
+    // 上报地址
+    // 'http://localhost:7001/monitoringplatform/getError'
+    this.reportUrl = reportUrl;
+    // 上报app
+    this.appName = appName;
+    // 错误手机率(默认全部收集)
+    this.odds = 1;
   }
-  
-  async report() {
-    const res = await fetch(`${this.reportUrl}?_csrf=${this.csrf}`, {
-      method: 'post',
-      credentials: 'include',
-      body: JSON.stringify(this.reportData),
-      headers: new Headers({
-          'Content-Type': 'application/json'
-      })  
-    });
 
-    if(res.success) {
-      // todo
+  /**
+   * 上报错误
+   * @param {object} reportData 
+   */
+  async report(reportData) {
+    if (Math.random() <= this.odds) {
+      console.log('上报');
+      new Image().src = `${this.reportUrl}?appName=${this.appName}&error=${JSON.stringify(reportData)}`;
+    } else {
+      console.log('不上报');
     }
-
   }
+
+  /**
+   * 错误收集率设置
+   * @param {number} odds 
+   */
+  setOdds(odds) {
+    this.odds = odds;
+  }
+
 }
 
+let util = new Util('http://localhost:7001/monitoringplatform/getError');
+// 错误收集率
+util.setOdds(1);
 
-
-
-
-// 2.捕获异步错误
-/**
- * @param {String}  msg    错误信息
- * @param {String}  url    出错文件
- * @param {Number}  row    行号
- * @param {Number}  col    列号
- * @param {Object}  error  错误详细信息
- */
+// 1.捕获运行时、同步、异步错误
 window.onerror = (msg, url, row, col, error) => {
-    console.log({ msg,  url,  row, col, error });
-    // 阻止异常向上抛出
-    return true;
+  util.report({ msg, url, row, col, error })
+  // 阻止异常向上抛出
+  return true;
 }
-// test-error
 
-// 3.捕获“网络请求异常”错误
-// 由于网络请求异常不会事件冒泡，因此必须在捕获阶段将其捕捉到才行
+// 2.捕获“网络请求异常”错误
 window.addEventListener('error', (msg, url, row, col, error) => {
-    console.log({ msg,  url,  row, col, error });
-    // more msg
+  util.report({ msg, url, row, col, error })
 }, true);
 
-// 4.   捕获全局Promise错误
+// 3.捕获全局Promise错误
 window.addEventListener('unhandledrejection', (event) => {
-    console.log(event);
-    // event.reason
+  util.report(event)
+  // event.reason
 });
 // Promise.reject(1);
 
@@ -67,17 +68,3 @@ window.addEventListener('unhandledrejection', (event) => {
 
 // 7.   捕获压缩代码中错误
 // sourcemap
-
-// 上报错误
-function report(error) {
-    var reportUrl = 'http://xxxx/report';
-    new Image().src = reportUrl + 'error=' + error;
-}
-
-// 发送
-let send = function(data) {
-  // 只采集 30%
-  if(Math.random() < 0.3) {
-    send(data)      // 上报错误信息
-  }
-}

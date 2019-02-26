@@ -8,18 +8,15 @@ class HomeController extends Controller {
     await ctx.render('monitoringplatform.ejs', {});
   }
 
-  test() {
+  async test() {
     const ctx = this.ctx;
     await ctx.render('errorTest.ejs', {});
   }
 
   async getError() {
     const ctx = this.ctx;
-
+    console.log(ctx.query);
     ctx.status = 200;
-    ctx.body = {
-      success: true
-    };
   }
 }
 
