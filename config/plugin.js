@@ -18,4 +18,4 @@ exports.assets = {
 exports.mysql = {
     enable: true,
     package: 'egg-mysql',
-  };
+};

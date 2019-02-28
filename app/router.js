@@ -12,4 +12,5 @@ module.exports = app => {
   router.get('/monitoringplatform', controller.monitoringplatform.index);
   router.get('/monitoringplatform/getError', controller.monitoringplatform.getError);
   router.get('/monitoringplatform/test', controller.monitoringplatform.test);
+  router.get('/monitoringplatform/getData', controller.monitoringplatform.getData);
 };
