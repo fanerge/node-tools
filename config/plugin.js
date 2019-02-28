@@ -11,5 +11,11 @@ exports.ejs = {
 exports.assets = {
     enable: true,
     package: 'egg-view-assets',
-    screenshot: '/screenshot/'
+    screenshot: '/screenshot/',
+    public: '/public'
 };
+
+exports.mysql = {
+    enable: true,
+    package: 'egg-mysql',
+  };

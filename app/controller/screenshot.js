@@ -7,6 +7,11 @@ const path = require('path');
 class HomeController extends Controller {
   async index() {
     const ctx = this.ctx;
+    await ctx.render('screenshot.ejs', {});
+  }
+
+  async split() {
+    const ctx = this.ctx;
     // 服务端截屏
     const url = ctx.request.body.url
     const browser = await puppeteer.launch();

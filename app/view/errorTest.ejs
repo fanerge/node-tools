@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>错误收集demo</title>
+</head>
+<body>
+    <h1>错误收集demo</h1>
+    <ul>
+        <li>产生一个同步错误<button id="syncError">产生一个同步错误</button></li>
+        <li>产生一个异步错误<button id="asyncError">产生一个异步错误</button></li>
+        <li>产生一个资源错误<button id="resourceError">产生一个资源错误(img)</button></li>
+        <li>产生一个资源错误<button id="cssError">产生一个资源错误(css)</button></li>
+        <li>产生一个Promise错误<button id="promiseError">产生一个Promise错误</button></li>
+    </ul>
+</body>
+<script src="/public/util.js"></script>
+<script>
+    // 同步错误
+    let syncError = document.querySelector('#syncError');
+    syncError.onclick = () => {
+        error
+    };
+
+    // 异步错误
+    let asyncError = document.querySelector('#asyncError');
+    asyncError.onclick = () => {
+        setTimeout(() => {
+            error
+        }, 1000);
+    };
+
+    // 资源错误
+    let resourceError = document.querySelector('#resourceError');
+    resourceError.onclick = () => {
+        let body = document.body;
+        let img = document.createElement('img');
+        img.src = './404.jpg';
+        body.appendChild(img);
+    };
+
+    // cssError
+    let cssError = document.querySelector('#cssError');
+    cssError.onclick = () => {
+        let head = document.querySelector('head');
+        let link = document.createElement('link');
+        link.rel = "stylesheet";
+        link.type = "text/css"
+        link.href = './404.css';
+        link.id = 'link1'
+        head.appendChild(link);
+    };
+
+    // promise错误
+    let promiseError = document.querySelector('#promiseError');
+    promiseError.onclick = () => {
+        Promise.reject('promisec错误')
+    };
+</script>
+</html>
